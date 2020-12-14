@@ -9,6 +9,12 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: "/charts",
+      name: "Chart",
+      component: () => import("@/views/tst/chart")
+      // meta: { guest: true },
+    },
+    {
       path: "/login",
       name: "Login",
       component: () => import("@/views/dashboard/pages/login")
