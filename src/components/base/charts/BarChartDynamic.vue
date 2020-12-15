@@ -68,7 +68,8 @@ export default {
           trigger: "axis",
           axisPointer: {
             type: "shadow" // 'line' | 'shadow'
-          }
+          },
+          backgroundColor: "rgba(255, 255, 255, 0.85)"
         },
         grid: {
           top: 10,
@@ -104,7 +105,8 @@ export default {
             showBackground: true,
             backgroundStyle: {
               color: "rgba(7, 57, 237, 0.2)",
-              borderColor: "#000"
+              borderColor: "#040d70",
+              borderWidth: 3
             }
           }
         ]

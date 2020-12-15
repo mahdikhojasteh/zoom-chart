@@ -29,29 +29,26 @@ const chartDatas = {
   lineChartData: {
     data: [
       {
-        name: "type1",
-        color: "#db1f1f",
+        name: "line1 name",
         data: [120, 82, 91, 154, 162, 140, 130]
       },
       {
-        name: "type2",
-        color: "#2011f2",
+        name: "line2 name",
         data: [180, 160, 151, 106, 145, 150, 130]
       },
       {
-        name: "type3",
-        color: "#0af26e",
+        name: "line3 name",
         data: [80, 100, 121, 104, 105, 90, 100]
       },
       {
-        name: "type4",
-        color: "#590be0",
+        name: "line4 name",
         data: [100, 120, 161, 134, 105, 160, 165]
       }
     ],
     xAxisLabels: ["one", "two", "three", "four", "five", "six", "seven"]
   },
   pieChartData: {
+    pieCN: "Pie Chart Name",
     data: [
       { name: "type1", value: 800 },
       { name: "type2", value: 500 },

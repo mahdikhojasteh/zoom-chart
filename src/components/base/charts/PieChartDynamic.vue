@@ -57,7 +57,7 @@ export default {
       this.chart = init(this.$el, "azul");
       this.setOptions(this.chartData);
     },
-    setOptions({ data } = {}) {
+    setOptions({ data, pieCN } = {}) {
 
       let plotData = [];
       let legends = [];
@@ -68,8 +68,10 @@ export default {
 
       this.chart.setOption({
         tooltip: {
+          show: true,
           trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
+          formatter: "{a} <br/>{b} : {c} ({d}%)",
+          backgroundColor: "rgba(255, 255, 255, 0.8)"
         },
         legend: {
           left: "center",
@@ -78,7 +80,7 @@ export default {
         },
         series: [
           {
-            name: "WEEKLY WRITE ARTICLES",
+            name: pieCN,
             type: "pie",
             roseType: "radius",
             radius: [15, 95],
