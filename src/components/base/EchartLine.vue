@@ -1,13 +1,13 @@
 <template>
   <div>
-    <!-- <line-chart :chart-data="lineChartData" /> -->
-    <line-chart-dynamic :chart-data="lineChartData" />
+    <line-chart :chart-data="lineChartData" />
+    <!-- <line-chart-dynamic :chart-data="lineChartData" /> -->
   </div>
 </template>
 
 <script>
-// import LineChart from "@/components/base/charts/LineChart";
-import LineChartDynamic from "@/components/base/charts/LineChartDynamic";
+import LineChart from "@/components/base/charts/LineChart";
+// import LineChartDynamic from "@/components/base/charts/LineChartDynamic";
 
 const lineChartData = {
   newVisitis: {
@@ -31,8 +31,8 @@ const lineChartData = {
 export default {
   name: "DashboardAdmin",
   components: {
-    // LineChart,
-    LineChartDynamic
+    LineChart,
+    // LineChartDynamic
   },
   data() {
     return {
