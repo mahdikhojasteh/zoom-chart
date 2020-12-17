@@ -197,7 +197,7 @@
     methods: {
       ...mapActions('storeDashboard', ['actUpdateDrawer']),
       async logout (){
-        // await this.$store.dispatch('auth/LogOut')
+        await this.$store.dispatch('storeAuth/LogOut')
         console.log('store... ',this.getStateIsAuthenticated)
         this.$router.push('/login')
       }

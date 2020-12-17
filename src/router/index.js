@@ -9,6 +9,12 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: "/sstable",
+      name: "Sstable",
+      component: () => import("@/views/tst/SsPaginationSort")
+      // meta: { guest: true },
+    },
+    {
       path: "/test",
       name: "Test",
       component: () => import("@/views/tst/test")
@@ -71,26 +77,28 @@ const router = new Router({
           component: () => import("@/views/dashboard/maps/GoogleMaps")
         },
         // Upgrade
-        {
-          name: "Upgrade",
-          path: "upgrade",
-          component: () => import("@/views/dashboard/Upgrade")
-        }
+        // {
+        //   name: "Upgrade",
+        //   path: "upgrade",
+        //   component: () => import("@/views/dashboard/Upgrade")
+        // }
       ]
     }
   ]
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     if (store.getters.isAuthenticated) {
-//       next();
-//       return;
-//     }
-//     next("/login");
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    console.log('beforeEach isAuthenticated ',
+                 store.getters['storeAuth/getStateIsAuthenticated'])
+    if (store.getters['storeAuth/getStateIsAuthenticated']) {
+      next();
+      return;
+    }
+    next("/login");
+  } else {
+    next();
+  }
+});
 
 export default router;

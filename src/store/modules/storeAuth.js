@@ -1,12 +1,13 @@
 //store/modules/auth.js
 
 import axios from "axios";
+import router from "../../router";
 
 const storeAuth = {
   namespaced: true,
   state: {
     stateUser: null,
-    stateIsAuthenticated: true
+    stateIsAuthenticated: false
   },
   getters: {
     getStateIsAuthenticated: state => state.stateIsAuthenticated,
@@ -24,14 +25,19 @@ const storeAuth = {
     actLogInUser({ commit }, User) {
       axios.defaults.headers.post["username"] = User.username;
       axios.defaults.headers.post["password"] = User.password;
-      axios
-        .post("Login")
-        .then(res => {
-          console.log("then block ", res);
-          commit("mutateStateUser", User.username);
-          commit("mutateStateIsAuthenticated");
-        })
-        .catch(error => {
+      axios.post("Login").then(res => {
+          // console.log("then block ", res.data);
+          // our api is returning error in res.data in case of un authentication
+          // otherwise returns token in res.data
+          if (res.data === "error") {
+            console.log("do not authenticate");
+          } else {
+            console.log("authenticate");
+            commit("mutateStateUser", User.username);
+            commit("mutateStateIsAuthenticated");
+            router.push("/");
+          }
+        }).catch(error => {
           console.log(
             "catch block ",
             error.message || error.response.data.message
@@ -39,19 +45,19 @@ const storeAuth = {
         });
     },
     async LogOut({ commit }) {
-      let user = null;
-      commit("mutateLogout", user);
+      commit("mutateLogout");
     }
   },
   mutations: {
     mutateStateUser(state, username) {
-      state.user = username;
+      state.stateUser = username;
     },
     mutateStateIsAuthenticated(state) {
-      state.isAuthenticated = true;
+      state.stateIsAuthenticated = true;
     },
     mutateLogout(state) {
-      state.user = null;
+      state.stateUser = null;
+      state.stateIsAuthenticated = false;
     }
   }
 };

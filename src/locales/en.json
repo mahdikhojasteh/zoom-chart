@@ -41,5 +41,7 @@
   "user": "User Profile",
   "vforms": "Validation Forms",
   "widgets": "Widgets",
-  "wizard": "Wizard"
+  "wizard": "Wizard",
+  "LoginTitle": "login",
+  "login_err_msg": "something went wrong with login, please control input credentials."
 }

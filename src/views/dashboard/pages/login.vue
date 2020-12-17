@@ -27,6 +27,11 @@
                   ></v-text-field>
                 </v-form>
               </v-card-text>
+              <v-card-subtitle v-if="showError">
+                 <p class="error--text">
+                  {{$t('login_err_msg')}}
+                 </p>
+              </v-card-subtitle>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" @click="submit">ورود</v-btn>
@@ -52,27 +57,26 @@ export default {
       showError: false
     };
   },
-  created: {
-    ...mapGetters(["getIsAuthenticated"]),
+  computed: {
+    ...mapGetters('storeAuth', ["getStateIsAuthenticated"]),
   },
   methods: {
-    ...mapActions(["LogIn"]),
-    async submit() {
-      // const User = new FormData();
-      // User.append("username", this.form.username);
-      // User.append("password", this.form.password);
-      // console.log(User);
+    ...mapActions('storeAuth', ["actLogInUser"]),
+    submit() {
+      const User = new FormData();
+      User.append("username", this.form.username);
+      User.append("password", this.form.password);
       try {
-          await this.LogIn(this.form);
-          if(this.getIsAuthenticated)
-          {
-            console.log(this.getIsAuthenticated);
-            this.$router.push("/");
-            this.showError = false;
-          }
-          else{
-            this.showError = true;
-          }
+          this.actLogInUser(this.form);
+          console.log("after login this.getStateIsAuthenticated ", this.getStateIsAuthenticated);
+          // if(this.getStateIsAuthenticated)
+          // {
+          //   this.$router.push("/");
+          //   this.showError = false;
+          // }
+          // else{
+          //   this.showError = true;
+          // }
       } catch (error) {
         this.showError = true
       }
