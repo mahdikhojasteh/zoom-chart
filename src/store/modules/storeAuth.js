@@ -46,6 +46,9 @@ const storeAuth = {
           } else {
             console.log("200ok auth success!!! from store.actLogInUser");
             console.log("token ", res.data);
+            const today = new Date();
+            const time = today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
+            console.log('login time:', time);
             commit("mutateStateToken", res.data);
             commit("mutateStateUser", User.username);
             commit("mutateStateIsAuthenticated");
@@ -59,6 +62,9 @@ const storeAuth = {
       })
     },
     LogOut({ commit }) {
+      const today = new Date();
+      const time = today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
+      console.log('logout time:', time);
       commit("mutateLogout");
     }
   },
