@@ -13,7 +13,7 @@
                 <v-form>
                   <v-text-field
                     label="نام کاربری"
-                    v-model="form.username"
+                    v-model="User.username"
                     prepend-icon="mdi-account"
                     type="text"
                   ></v-text-field>
@@ -21,7 +21,7 @@
                   <v-text-field
                     id="password"
                     label="گذرواژه"
-                    v-model="form.password"
+                    v-model="User.password"
                     prepend-icon="mdi-lock"
                     type="password"
                   ></v-text-field>
@@ -34,7 +34,7 @@
               </v-card-subtitle>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="submit">ورود</v-btn>
+                <v-btn color="primary" @click="btnLoginClicked">ورود</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -50,7 +50,7 @@ export default {
   name: "Login",
   data() {
     return {
-      form: {
+      User: {
         username: "",
         password: "",
       },
@@ -62,24 +62,16 @@ export default {
   },
   methods: {
     ...mapActions('storeAuth', ["actLogInUser"]),
-    submit() {
-      const User = new FormData();
-      User.append("username", this.form.username);
-      User.append("password", this.form.password);
-      try {
-          this.actLogInUser(this.form);
-          console.log("after login this.getStateIsAuthenticated ", this.getStateIsAuthenticated);
-          // if(this.getStateIsAuthenticated)
-          // {
-          //   this.$router.push("/");
-          //   this.showError = false;
-          // }
-          // else{
-          //   this.showError = true;
-          // }
-      } catch (error) {
-        this.showError = true
-      }
+    btnLoginClicked() {
+      this.actLogInUser(this.User)
+      .then(() => {
+        this.$router.push({ name: 'Dashboard' });
+        this.showError = false;
+      })
+      .catch(err => {
+        console.log(err, 'from login.vue');
+        this.showError = true;
+      });
     },
   },
 };

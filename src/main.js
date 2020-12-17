@@ -21,6 +21,15 @@ import "./plugins/vee-validate";
 import vuetify from "./plugins/vuetify";
 import i18n from "./i18n";
 import axios from "axios";
+import IdleVue from 'idle-vue'
+
+
+const eventsHub = new Vue()
+ 
+Vue.use(IdleVue, {
+  eventEmitter: eventsHub,
+  idleTime: 3*60*1000 // time in ms before logout
+})
 
 // axios.defaults.withCredentials = true
 // axios.defaults.baseURL = 'https://gabbyblog.herokuapp.com/';

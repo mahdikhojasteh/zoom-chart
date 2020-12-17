@@ -88,10 +88,15 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+  let isAuthenticated = store.getters['storeAuth/getStateIsAuthenticated'];
+  // checking if user already is logged in, push request to home url
+  if (to.name === 'Login' && isAuthenticated){
+    console.log('beforeEach routes, user already logged in');
+    next({name:'Dashboard'});
+  }
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    console.log('beforeEach isAuthenticated ',
-                 store.getters['storeAuth/getStateIsAuthenticated'])
-    if (store.getters['storeAuth/getStateIsAuthenticated']) {
+    console.log('beforeEach routes, isAuthenticated value is: ', isAuthenticated)
+    if (isAuthenticated) {
       next();
       return;
     }

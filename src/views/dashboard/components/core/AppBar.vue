@@ -119,7 +119,7 @@
       class="ml-2"
       min-width="0"
       text
-      @click="logout"
+      @click="btnLogoutClicked"
     >
       <v-icon>mdi-logout</v-icon>
     </v-btn>
@@ -190,16 +190,20 @@
 
     computed: {
       ...mapState('storeDashboard', ['stateDrawer']),
-      ...mapGetters('storeAuth', ['getStateIsAuthenticated']),
-      isLoggedIn : function(){ return this.$store.getters.isAuthenticated},
+      ...mapGetters('storeAuth', ['getStateIsAuthenticated'])
     },
 
     methods: {
       ...mapActions('storeDashboard', ['actUpdateDrawer']),
-      async logout (){
-        await this.$store.dispatch('storeAuth/LogOut')
-        console.log('store... ',this.getStateIsAuthenticated)
-        this.$router.push('/login')
+      ...mapActions('storeAuth', ['LogOut']),
+      // async logout (){
+      //   await this.$store.dispatch('storeAuth/LogOut')
+      //   console.log('store... ',this.getStateIsAuthenticated)
+      //   this.$router.push('/login')
+      // },
+      btnLogoutClicked() {
+        this.LogOut();
+        this.$router.push('/login');
       }
     },
   }
