@@ -1,7 +1,8 @@
 <template>
-  <div class="dashboard-editor-container">
-    <div :gutter="32">
-      <!-- <span :xs="24" :sm="24" :lg="8">
+  <v-app>
+    <div class="dashboard-editor-container">
+      <div :gutter="32">
+        <!-- <span :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
           <line-chart :chart-data="lineChartData" />
         </div>
@@ -15,17 +16,34 @@
         <div class="chart-wrapper">
           <bar-chart :chart-data="barChartData" />
         </div>
-      </span>-->
-      <span :xs="24" :sm="24" :lg="8">
-        <div class="chart-wrapper">
-          <zoom-chart :chart-data="zoomChartData" />
-        </div>
-      </span>
+        </span>-->
+        justify: ['start','center','end','space-around','space-between',]
+        <v-container>
+          <v-row :justify="'center'">
+            <v-col md="4">
+              <v-label>start date</v-label>
+              <date-picker v-model="datetime" type="datetime" class="pa-2" />
+            </v-col>
+            <v-col md="4">
+              <v-label>end date</v-label>
+              <date-picker v-model="datetime" type="datetime" class="pa-2" />
+            </v-col>
+          </v-row>
+        </v-container>
+        <span :xs="24" :sm="24" :lg="8">
+          <div class="chart-wrapper">
+            <zoom-chart :chart-data="zoomChartData" />
+          </div>
+        </span>
+      </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>
+// Equivalent to `axios.get('https://httpbin.org/get?answer=42')`
+// const res = await axios.get('https://httpbin.org/get', { params: { answer: 42 } });
+
 import LineChart from "@/components/base/charts/LineChartDynamic";
 import PieChart from "@/components/base/charts/PieChartDynamic";
 import BarChart from "@/components/base/charts/BarChartDynamic";
@@ -83,7 +101,8 @@ export default {
       lineChartData: chartDatas.lineChartData,
       pieChartData: chartDatas.pieChartData,
       barChartData: chartDatas.barChartData,
-      zoomChartData: null
+      zoomChartData: null,
+      datetime: ""
     };
   },
   created() {
