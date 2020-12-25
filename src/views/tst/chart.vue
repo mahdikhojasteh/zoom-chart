@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-editor-container">
     <div :gutter="32">
-      <span :xs="24" :sm="24" :lg="8">
+      <!-- <span :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
           <line-chart :chart-data="lineChartData" />
         </div>
@@ -15,6 +15,11 @@
         <div class="chart-wrapper">
           <bar-chart :chart-data="barChartData" />
         </div>
+      </span>-->
+      <span :xs="24" :sm="24" :lg="8">
+        <div class="chart-wrapper">
+          <zoom-chart :chart-data="zoomChartData" />
+        </div>
       </span>
     </div>
   </div>
@@ -24,6 +29,8 @@
 import LineChart from "@/components/base/charts/LineChartDynamic";
 import PieChart from "@/components/base/charts/PieChartDynamic";
 import BarChart from "@/components/base/charts/BarChartDynamic";
+import ZoomChart from "@/components/base/charts/ZoomChartDynamic";
+import { mapActions, mapGetters } from "vuex";
 
 const chartDatas = {
   lineChartData: {
@@ -68,16 +75,40 @@ export default {
   components: {
     LineChart,
     PieChart,
-    BarChart
+    BarChart,
+    ZoomChart
   },
   data() {
     return {
       lineChartData: chartDatas.lineChartData,
       pieChartData: chartDatas.pieChartData,
-      barChartData: chartDatas.barChartData
+      barChartData: chartDatas.barChartData,
+      zoomChartData: null
     };
   },
+  created() {
+    this.actGetObamaBudget()
+      .then(() => {
+        // let obamaBudget = getStateObamaBudget;
+        // console.log("from chart.vue");
+        this.getZoomChartData();
+      })
+      .catch(err => {
+        // console.log("error getting obamaBudget chart.vue");
+        console.log(err);
+      });
+  },
+  computed: {
+    ...mapGetters("storeChartData", ["getStateObamaBudget"])
+  },
+
   methods: {
+    getZoomChartData() {
+      console.log("getZoomChartData() is called");
+      console.log(this.getStateObamaBudget);
+      this.zoomChartData = this.getStateObamaBudget;
+    },
+    ...mapActions("storeChartData", ["actGetObamaBudget"]),
     handleSetchartDatas(type) {
       this.chartDatas = chartDatas[type];
     }
